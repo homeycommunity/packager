@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.build.json",
+    "exclude": [
+        ".eslintrc.js",
+        "dist",
+        "coverage",
+        "bin.js"
+    ],
+}

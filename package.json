@@ -1,0 +1,28 @@
+{
+  "name": "@homeycommunity/packager",
+  "version": "0.0.3",
+  "description": "The Homey Community Space Packager",
+  "main": "dist/main.js",
+  "type": "module",
+  "bin": "./hcs-packager.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Dominic Vonk <dominic@vonk.io>",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "hcs-packager.js",
+    "package.json",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/tar-stream": "^3.1.3",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "meow": "^13.2.0",
+    "tar-stream": "^3.1.7"
+  }
+}

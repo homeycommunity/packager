@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "declaration": true,
+        "removeComments": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "esnext",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "baseUrl": "./src",
+        "incremental": true,
+        "skipLibCheck": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "strictPropertyInitialization": true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": false,
+        "allowJs": true,
+        "lib": [
+            "esnext"
+        ],
+        "resolveJsonModule": true
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        ".eslintrc.js",
+        "dist",
+        "coverage",
+        "examples",
+        "hcs-packager.js"
+    ]
+}
