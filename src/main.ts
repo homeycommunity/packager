@@ -1,8 +1,13 @@
-import { createWriteStream, promises as fs, readFileSync } from "node:fs";
+import {
+  createReadStream,
+  createWriteStream,
+  promises as fs,
+  readFileSync,
+} from "node:fs";
 import os from "node:os";
 import { join } from "node:path";
-import { createGzip } from "node:zlib";
-import { pack } from "tar-stream";
+import { createGunzip, createGzip } from "node:zlib";
+import { extract, pack } from "tar-stream";
 
 function parseIgnoreFile(content: string): string[] {
   return content
@@ -155,6 +160,59 @@ export async function createTarGz(
     output.on("error", reject);
     gzip.on("error", reject);
     archive.on("error", reject);
+  });
+}
+
+export async function fixTarGzPaths(
+  inputPath: string,
+  outputPath: string
+): Promise<void> {
+  const _extract = extract();
+  const _pack = pack();
+  const tempFile = join(os.tmpdir(), "hcs-temp-fix.tar.gz");
+  const gzip = createGzip();
+  const output = createWriteStream(tempFile);
+
+  _pack.pipe(gzip).pipe(output);
+
+  _extract.on("entry", function (header, stream, next) {
+    // Fix path separators in the header name
+    header.name = header.name.replace(/\\/g, "/");
+
+    // If it's a symlink, also fix the linkname
+    if (header.type === "symlink" && header.linkname) {
+      header.linkname = header.linkname.replace(/\\/g, "/");
+    }
+
+    // Add the entry to the new archive
+    const entry = _pack.entry(header, function (err) {
+      if (err) throw err;
+      next();
+    });
+
+    stream.pipe(entry);
+  });
+
+  _extract.on("finish", function () {
+    _pack.finalize();
+  });
+
+  // Pipe input file through gunzip to the extractor
+  createReadStream(inputPath).pipe(createGunzip()).pipe(_extract);
+
+  return new Promise((resolve, reject) => {
+    output.on("finish", async () => {
+      try {
+        await fs.copyFile(tempFile, outputPath);
+        await fs.rm(tempFile);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+    output.on("error", reject);
+    gzip.on("error", reject);
+    _pack.on("error", reject);
   });
 }
 
