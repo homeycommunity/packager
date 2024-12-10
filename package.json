@@ -1,6 +1,6 @@
 {
   "name": "@homeycommunity/packager",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The Homey Community Space Packager",
   "main": "dist/main.js",
   "type": "module",
