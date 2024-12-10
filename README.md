@@ -5,7 +5,7 @@ This tool is used to create a tar.gz file of a Homey app.
 ## Usage
 
 ```bash
-npx @homeycommunity/packager <path-to-app> -o <output-file>
+npx @homeycommunity/packager@latest <path-to-app> -o <output-file>
 ```
 
 ## Options
@@ -16,7 +16,7 @@ npx @homeycommunity/packager <path-to-app> -o <output-file>
 ## Example
 
 ```bash
-npx @homeycommunity/packager ./my-app -o my-app.tar.gz
+npx @homeycommunity/packager@latest ./my-app -o my-app.tar.gz
 ```
 
 This will create a tar.gz file in the current working directory.
